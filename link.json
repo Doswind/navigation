@@ -1,0 +1,38 @@
+[
+  {
+    "group": " 办 公 工 作 台",
+    "highlight": [ "禅道PMS"],
+    "twinkle": [ "明道云", "石墨文档" ],
+    "link": {
+      "Gitlab": "https://github.com/Doswind",
+      "Github": "https://github.com/Doswind",
+      "Gitee": "https://github.com/Doswind",
+      "Gerrit": "https://github.com/Doswind",
+      "明道云": "https://github.com/Doswind",
+      "禅道PMS": "https://github.com/Doswind",
+      "Seafile": "https://github.com/Doswind",
+      "自动化平台": "https://github.com/Doswind",
+      "产品管理": "https://github.com/Doswind",
+      "CRP": "https://github.com/Doswind",
+      "石墨文档": "https://github.com/Doswind",
+      "成都Jenkins": "https://github.com/Doswind",
+      "OA平台": "https://github.com/Doswind"
+    }
+  },
+  {
+    "group": "学 习 链 接 ",
+    "highlight": [ "产品研发流程模板" ],
+    "twinkle": [ "ArchWiki" ],
+    "link": {
+      "ArchWiki": "https://wiki.archlinux.org/",
+      "DeepinWiki": "https://wikidev.uniontech.com/%E9%A6%96%E9%A1%B5",
+      "Debian 参考手册": "https://www.debian.org/doc/manuals/debian-reference/index.zh-cn.html",
+      "Debian 管理员手册": "https://www.debian.org/doc/manuals/debian-handbook/",
+      "Linux From Scratch": "https://bf.mengyan1223.wang/lfs/zh_CN/10.0/LFS-BOOK.html",
+      "Ansible Documentation": "https://docs.ansible.com/ansible/latest/index.html",
+      "LWN.net": "https://lwn.net",
+      "phoronix": "http://phoronix.com ",
+      "reddit": "https://www.reddit.com/r/linux/"
+    }
+  }
+]

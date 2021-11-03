@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8">
+    <title>Hao456导航</title>
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/2.1.1/jquery.min.js"></script>
+    <style>
+        body {
+        width: 75%;
+        margin: 0px auto;
+        font-family: 'trebuchet MS', 'Lucida sans', Arial;
+        font-size: 14px;
+        color: #444;
+        }
+        .context-1 {
+        *border-collapse: collapse; /* IE7 and lower */
+        border-spacing: 1;
+        width: 100%;
+        }
+        .bordered {
+            border: solid #ccc 1px;
+            -moz-border-radius: 6px;
+            -webkit-border-radius: 6px;
+            border-radius: 6px;
+            -webkit-box-shadow: 0 1px 1px #ccc;
+            -moz-box-shadow: 0 1px 1px #ccc;
+            box-shadow: 0 1px 1px #ccc;
+        }
+
+        .pack-tooltip {
+            position: relative;
+            display: inline-block;
+            border-bottom: 1px dotted black;
+        }
+
+        .pack-tooltip .pack-tooltiptext {
+            visibility: hidden;
+            white-space:pre-line;
+            white-space:pre-wrap;
+            width: 600px;
+            background-color: #A9A9A9;
+            color: #000000;
+            text-align: left;
+            border-radius: 6px;
+            padding:10px 10px 10px 10px;
+            position: absolute;
+            z-index: 1;
+            top: -5px;
+            left: 100%;
+
+            /* 淡入 - 1秒内从 0% 到 100% 显示: */
+            opacity: 0;
+            transition: opacity 1s;
+        }
+
+        .pack-tooltip:hover .pack-tooltiptext {
+            visibility: visible;
+            opacity: 1;}
+
+        .tr-field {color:#0000FF;font-weight:bold;}
+        .tr-notice {color:#FF00FF;font-weight:bold;}
+    </style>
+    <script language="javascript">
+        function changeColor(){
+            var color="#ff0000|#00ff00|#0000ff|#888800|#880088|#008888|yellow|green|blue|gray";
+            color=color.split("|");
+            $('.blink').css('color', color[parseInt(Math.random() * color.length)]);
+        }
+
+        $(function () {
+            setInterval("changeColor()",200);
+        })
+    </script>
+</head>
+
+<body>
+<nav class="navbar navbar-inverse " role="navigation">
+	<div class="container-fluid">
+    <div class="navbar-header">
+        <a class="navbar-brand" href="#"><font color="#FDF5E6"><b>Hao456导航</b></font></a>
+    </div>
+
+        <div>
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="login"><span class="glyphicon glyphicon-th-large"></span>管理</a></li>
+              <!--li><a href="hao456.html" download="Hao456.html"><span class="glyphicon glyphicon-download-alt"></span>下载</a></li-->
+                <li><a href="download/hao456.html" download><span class="glyphicon glyphicon-download-alt"></span>下载</a></li>
+           </ul>s
+        </div>
+
+	</div>
+</nav>
+
+<div  class="container context-1 bordered">
+	<table class="table table-striped table-hover ">
+		<thead>
+			<tr>
+				<th></th>
+				<th></th>
+                <th></th>
+                <th></th>
+			</tr>
+		</thead>
+
+		<tbody>
+            <tr class ="success" >
+                <td class ='tr-field' >&#9827;&#9827;   统 信 办 公 工 作 台 </td>
+                <td> </td> <td> </td> <td> </td>
+            </tr>
+			<tr>
+				<td><a href="https://gitlabcd.uniontech.com/" target="_blank">Gitlab</a></td>
+				<td><a href="https://gerrit.uniontech.com/" target="_blank">Gerrit</a></td>
+				<td><a class='tr-notice' href="https://cooperation.uniontech.com/app/my" target="_blank"><div class="blink">明道云</div></a></td>
+				<td><a class='tr-notice' href="https://pms.uniontech.com/zentao" target="_blank">禅道</a></td>
+			</tr>
+			<tr>
+				<td><a href="https://filewh.uniontech.com/" target="_blank">Seafile</a></td>
+				<td><a href="https://pms.uniontech.com/zentao" target="_blank">自动化平台</a></td>
+				<td><a href="https://iso.uniontech.com/" target="_blank">产品管理</a></td>
+				<td><a href="https://crp.uniontech.com/#/passport/login" target="_blank">CRP</a></td>
+			</tr>
+			<tr>
+				<td><a class='tr-notice' href="https://doc.uniontech.com/desktop" target="_blank"><div class="blink">石墨文档</div></a></td>
+				<td><a href="http://10.8.10.68:8080/" target="_blank">成都Jenkins</a></td>
+				<td><a href="https://jenkinswh.uniontech.com/view/%E6%88%90%E9%83%BD/" target="_blank">武汉Jenkins</a></td>
+				<td><a href="https://oa.uniontech.com/" target="_blank">OA平台</a></td>
+			</tr>
+			<tr>
+				<td><a href="http://10.8.10.68:31125" target="_blank">仓库检索平台</a></td>
+				<td><a class='tr-notice' href="http://ac.uniontech.com/homepage/index.html?_FLAG=1" target="_blank">上网认证</a></td>
+				<td><a href="http://10.8.0.110/uos/device/snapshots/" target="_blank">日构建镜像地址</a></td>
+				<td><a href="http://10.8.0.110/uos/device/test/1020/" target="_blank">转测试镜像存储</a></td>
+			</tr>
+			<tr>
+				<td><a href="https://doc.uniontech.com/sheets/qKbw9RbPw4gUi0xQ/cwEfe" target="_blank">产品线项目组人员明细表</a></td>
+				<td><a href="https://filewh.uniontech.com/d/b439d95f32e94d9095cf" target="_blank">产品研发流程模板</a></td>
+				<td><a href=""></a>
+				<td><a href=""></a>
+			</tr>
+
+            <tr class ="success" >
+                <td class ='tr-field' >&#9827;&#9827;  石 墨 在 线 文 档 </td>
+                <td> </td> <td> </td> <td> </td>
+            </tr>
+			<tr>
+				<td><a href="https://doc.uniontech.com/sheets/FE2ABomUIs8NvxQg/fiK9M" target="_blank">系统研发日常管理</a></td>
+				<td><a href="https://doc.uniontech.com/sheets/XiL481XKF7k0eQtI/lRCc9" target="_blank">系统研发站会记录</a></td>
+				<td><a href="https://doc.uniontech.com/space/pmkxQYlZvjIlbnAN" target="_blank">系统组在线文档</a></td>
+				<td><a href="https://doc.uniontech.com/folder/16q8MwKo85U8zwk7" target="_blank">1020项目在线文档</a></td>
+			</tr>
+			<tr>
+				<td><a href="https://doc.uniontech.com/folder/NJkbEl8gdxHgljqR" target="_blank">成研-公共</a></td>
+				<td><a href="https://doc.uniontech.com/space/2wAlXOVMb5SaXKAP" target="_blank">成研-技术报告及专利</a></td>
+				<td><a href="https://doc.uniontech.com/sheets/vFprojrllDUFd855/65OF9" target="_blank">商机对接跟踪表</a></td>
+				<td><a href="https://doc.uniontech.com/sheets/Yow9XjkMEG0RGVxi/ReuJR" target="_blank">系统部资源信息表</a></td>
+			</tr>
+			<tr>
+				<td><a href="https://doc.uniontech.com/sheets/KSKaYD9peywLTjRM/IzXx1" target="_blank">CD-成都研发中心-软件包维护列表</a></td>
+				<td><a href="" target="_blank">成研质量红黑事件登记表</a></td>
+				<td><a href="" target="_blank">技术报告评审进度表</a></td>
+				<td><a href="https://doc.uniontech.com/sheets/pgg8bAIrMOkN51tW/WO5AL" target="_blank">上游贡献统计</a></td>
+			</tr>
+
+            <tr class ="success" >
+                <td class ='tr-field' >&#9827;&#9827;  Onlyoffice 在    线    文    档 (即将废弃） </td>
+                <td> </td> <td> </td> <td> </td>
+            </tr>
+			<tr>
+				<td><a href="https://onlyoffice.uniontech.com/Products/Files/DocEditor.aspx?fileid=50394" target="_blank">系统研发日常管理</a></td>
+				<td><a href="https://onlyoffice.uniontech.com/Products/Files/DocEditor.aspx?fileid=50393" target="_blank">系统研发站会记录</a></td>
+				<td><a href="https://onlyoffice.uniontech.com/Products/Files/#1602" target="_blank">系统组在线文档</a></td>
+				<td><a href="https://onlyoffice.uniontech.com/Products/Files/#13422" target="_blank">1020项目在线文档</a></td>
+			</tr>
+			<tr>
+				<td><a href="https://onlyoffice.uniontech.com/Products/Files/DocEditor.aspx?fileid=48900" target="_blank">商机对接跟踪表</a></td>
+				<td><a href="https://onlyoffice.uniontech.com/Products/Files/DocEditor.aspx?fileid=35235" target="_blank">系统部资源信息表</a></td>
+				<td><a href="https://onlyoffice.uniontech.com/Products/Files/DocEditor.aspx?fileid=50187" target="_blank">成研质量红黑事件登记表</a></td>
+				<td><a href="https://onlyoffice.uniontech.com/Products/Files/DocEditor.aspx?fileid=5083" target="_blank">技术报告评审进度表</a></td>
+			</tr>
+			<tr>
+				<td><a href="https://onlyoffice.uniontech.com/Products/Files/DocEditor.aspx?fileid=44282" target="_blank">上游贡献统计</a></td>
+				<td><a href=""></a>
+				<td><a href=""></a>
+				<td><a href=""></a>
+			</tr>
+
+            <tr class ="success" >
+                <td class ='tr-field' >&#9827;&#9827;  学 习 链 接  </td>
+                <td> </td> <td> </td> <td> </td>
+            </tr>
+			<tr>
+				<td><a href="https://wiki.archlinux.org/" target="_blank">ArchWiki</a></td>
+				<td><a href="https://wikidev.uniontech.com/%E9%A6%96%E9%A1%B5" target="_blank">DeepinWiki</a></td>
+				<td><a href="https://www.debian.org/doc/manuals/debian-reference/index.zh-cn.html" target="_blank">Debian 参考手册</a></td>
+				<td><a href="https://www.debian.org/doc/manuals/debian-handbook/" target="_blank">Debian 管理员手册</a></td>
+			</tr>
+			<tr>
+				<td><a href="https://bf.mengyan1223.wang/lfs/zh_CN/10.0/LFS-BOOK.html" target="_blank">Linux From Scratch</a></td>
+				<td><a href="https://docs.ansible.com/ansible/latest/index.html" target="_blank">Ansible Documentation</a></td>
+				<td><a href="https://filewh.uniontech.com/library/31963abe-a3ce-46a3-a85e-bccc9d05b440/%E6%88%90%E9%83%BD%E7%A0%94%E5%8F%91%E4%B8%AD%E5%BF%83/" target="_blank">成都研发中心技术培训</a></td>
+				<td><a href="https://filewh.uniontech.com/group/171/" target="_blank">研发中心技术报告汇总</a></td>
+			</tr>
+			<tr>
+				<td><a href="https://lwn.net" target="_blank">LWN.net</a></td>
+				<td><a href="http://phoronix.com " target="_blank">phoronix</a></td>
+				<td><a href="https://www.reddit.com/r/linux/" target="_blank">reddit</a></td>
+				<td><a href=""></a>
+			</tr>
+		</tbody>
+	</table>
+</div>
+
+<div id="footer" style="background-color:#DCDCDC;clear:both;padding:0;margin-top:0;text-align:center;"> 版权 © Chengdu SysDev Team </div>
+
+</body>
+
+</html>
