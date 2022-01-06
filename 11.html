@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>使用HTML DOM操作表单及表单元素</title>
+<script>
+  window.onload = function(){
+     //声明变量
+
+     var sex,selDegree,infor;
+     var hobbies = new Array(); //用于存储选择的爱好
+     var langs = new Array(); //用于存储选择的语言
+     var fr = document.form1;//获取表单对象
+     fr.username.focus();//使用表单元素的focus()方法使用户名在页面加载完后获得焦点
+     var oBtn = document.getElementById('regBtn');
+     oBtn.onclick = function(){
+     return 0;
+       //判断是否选择了性别，以及获取所选择的值
+       if(fr.gender[0].checked == true){
+           sex = "女";
+       }else if(fr.gender[1].checked == true){
+           sex = "男";
+       }
+       //将选择的语言存储在langs数组中
+       for(var i = 0; i < 4; i++){
+         if(fr.lang[i].checked == true)
+             langs.push(fr.lang[i].value);
+       }
+       //将选择的爱好存储到hobbies数组中
+       for(i = 0; i < 6; i++){
+         if(fr.hobby.options[i].selected == true)
+            hobbies.push(fr.hobby.options[i].value);
+       }
+       var index = fr.degree.selectedIndex;//获取被选中项的索引
+       selDegree = fr.degree.options[index].value;//将选择的学历存储在selDegree变量中
+       infor = fr.info.value;
+       var msg = "您注册的个人信息如下：\n用户名："+fr.username.value+"\n密码："
+         +fr.psw1.value+"\n性别："+sex+"\n掌握的语言有："+langs.join("、")+"\n爱好有："+
+       hobbies.join("、")+"\n最高学历是："+selDegree+"\n个人情况："+infor;
+       alert(msg);
+     };
+};
+</script>
+</head>
+<body>
+  <h2>个人信息注册</h2>
+  <form id="form" name="form1" action="/11" method="POST">
+    <table border="1" width="630" cellpadding="5" cellspacing="0">
+      <tr><td>用户名</td><td><input type="text" name="username"/></td></tr>
+      <tr><td>密 码</td><td><input type="password" name="psw1"/></td></tr>
+      <tr><td>确认密码</td><td><input type="password" name="psw2"/></td></tr>
+      <tr><td>性 别</td><td>
+         <input type="radio" name="gender" value="女">女
+         <input type="radio" name="gender" value="男">男
+      </td></tr>
+      <tr><td>掌握的语言</td><td>
+         <input type="checkbox" name="lang" value="中文">中文
+         <input type="checkbox" name="lang" value="英文">英文
+         <input type="checkbox" name="lang" value="法文">法文
+         <input type="checkbox" name="lang" value="日文">日文
+      </td></tr>
+      <tr><td>个人爱好</td><td><select name="hobby" size="4" multiple="miltiple">
+         <option value="旅游">旅游</option>
+         <option value="运动">运动</option>
+         <option value="阅读">阅读</option>
+         <option value="上网">上网</option>
+         <option value="游戏">游戏</option>
+         <option value="音乐">音乐</option>
+      </select></td></tr>
+      <tr><td>最高学历</td><td><select name="degree">
+         <option value="-1">--请选择学历--</option>
+         <option value="博士">博士</option>
+         <option value="硕士">硕士</option>
+         <option value="本科">本科</option>
+         <option value="专科">专科</option>
+         <option value="高中">高中</option>
+         <option value="初中">初中</option>
+         <option value="小学">小学</option>
+      </select></td></tr>
+      <tr><td>个人简介</td><td><textarea name="info" rows="6" cols="45"></textarea>
+       </td></tr>
+      <tr><td colspan="2" align="center">
+         <input type="submit" value="注 册" id="regBtn">
+         <input type="reset" value="重 置">
+      </td></tr>
+    </table>
+  </form>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>js-表格的动态操作</title>
+        <meta charset="UTF-8"/>
+        <style type="text/css">
+            #ta tr{
+                height: 20px;
+            }
+            #t1{
+                font-weight: bold;
+                /*align-content: center;*/
+                /*不能设置文本内容居中*/
+            }
+        </style>
+        <script type="text/javascript">
+            function delectOper(btn){
+                //获取table对象，我们用其进行其对子元素的操作
+                var ta=document.getElementById("ta")
+                //获取其父类对象
+                var tr=btn.parentNode.parentNode;  //我们进行删除操作是删除其所在的行，所以我们用两次parent操作，第一层得到其所在的列(单元格)，再进一层得到其所在的行对象
+                //执行删除操作
+                ta.deleteRow(tr.rowIndex);  //进行删除操作时，我们用父类对象删除子类对象，
+                //注：对于div等对象我们可以使用remove方法，但是对于表格的属性我们利用delete进行操作，而且我们利用他的rowIndex(行号)而不是其id亦或是对象
+                //我们没法对每一个行设置一个id所以用这种方法(通过调入对象找到其父类对象)更加的方便
+            }
+            function changeOper(n){
+//                var n=n;
+                //获取修改的位置对象
+                var cell=document.getElementById("cell"+n);
+                //进行一定的限制(只有是数字的情况下才能进行拼接)
+                if(!isNaN(Number(cell.innerHTML))){//isNAN如果是true则表示数值不是数字，如果不添加就会产生连续点击修改时出现把源码拼接上的情况
+                //修改对象的类型
+                cell.innerHTML="<input type='text' value='"+cell.innerHTML+"' onblur='changeOper2(this,this.parentNode)'/>" //利用value='"+cell.innerHTML+"'可以实现内容的拼接注意：其内部的值是"+cell.innerHTML+"一个拼接量
+                //注意格式：在""内部的要用'',        //不知道为什么在内部不能直接把cell和n当参数传出去，但是可以传this对象，所以对应的我们利用this，简介传出其父对象
+                }  //还有一个bug:当用户输入的值是字符(不是数字),其也会进行value的赋值,但是无法再触发修改按键，只能检索原对象的内容类型，无法检索用户的
+            }
+            function changeOper2(inp,cell){
+                //获取修改位置对象
+//                var cell=document.getElementById("cell"+n);
+                //修改对象的类型
+                cell.innerHTML=inp.value;  //通过对象获得用户修改获得value值
+            }
+            //明白了：document可以调用任何的id,(好比其他都是全局变量一样)，但是他的局限是获取的方法有限，必须有特定的属性才能获取
+            //document。innerHTML是对其内部的内容进行重写。
+        </script>
+    </head>
+    <body>
+        <h3 align="center">表格的动态操作</h3>
+        <hr />
+        <table border="1px" id="ta" align="center">  <!--align可以直接把整个表格居中-->
+            <tr id="t1" align="center">
+                <td width="200px">Animation</td>
+                <td width="100px">上映年份</td>
+                <td width="100px">评分(10分)</td>
+                <td width="200px">投币</td>
+                <td width="200px">操作</td>
+            </tr>
+            <tr align="center">
+                <td>clannad</td>
+                <td>2008</td>
+                <td>9.9</td>
+                <td id="cell2">100</td>
+                <td>
+                    <input type="button" name="" id="" value="修改" onclick="changeOper(2)"/>
+                    <input type="button" name="" id="" value="删除" onclick="delectOper(this)"/>
+                </td>
+            </tr>
+            <tr align="center">
+                <td>月色真美</td>
+                <td>2017</td>
+                <td>9.4</td>
+                <td id="cell3">70</td>
+                <td>
+                    <input type="button" name="" id="" value="修改" onclick="changeOper(3)"/>
+                    <input type="button" name="" id="" value="删除" onclick="delectOper(this)"/>
+                </td>
+            </tr>
+            <tr align="center">
+                <td>境界的彼方</td>
+                <td>2013</td>
+                <td>9.4</td>
+                <td id="cell4">60</td>
+                <td>
+                    <input type="button" name="" id="" value="修改" onclick="changeOper(4)"/>
+                    <input type="button" name="" id="" value="删除" onclick="delectOper(this)"/>
+                </td>
+            </tr>
+        </table>
+    </body>
+</html>
+

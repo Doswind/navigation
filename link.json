@@ -1,31 +1,47 @@
 [
   {
-    "group": " 办 公 工 作 台",
-    "highlight": [ "禅道PMS"],
-    "twinkle": [ "明道云", "石墨文档" ],
+    "group": "开 发 站 点",
+    "highlight": [ "GitHub", "gitee"],
+    "twinkle": [ "debian" ],
     "link": {
-      "Gitlab": "https://github.com/Doswind",
-      "Github": "https://github.com/Doswind",
-      "Gitee": "https://github.com/Doswind",
-      "Gerrit": "https://github.com/Doswind",
-      "明道云": "https://github.com/Doswind",
-      "禅道PMS": "https://github.com/Doswind",
-      "Seafile": "https://github.com/Doswind",
-      "自动化平台": "https://github.com/Doswind",
-      "产品管理": "https://github.com/Doswind",
-      "CRP": "https://github.com/Doswind",
-      "石墨文档": "https://github.com/Doswind",
-      "成都Jenkins": "https://github.com/Doswind",
-      "OA平台": "https://github.com/Doswind"
+      "GitHub": "https://github.com/",
+      "gitee": "https://gitee.com/",
+      "gitlab": "www.gitlab.com",
+      "Debian": "https://www.debian.org/"
+    }
+  },
+  {
+    "group": "咨 讯 站 点",
+    "highlight": [ "", ""],
+    "twinkle": [ "百度" ],
+    "link": {
+      "网易": "www.163.com",
+      "新浪": "www.sina.com",
+      "百度": "www.baidu.com",
+      "搜狐": "www.sohu.com",
+      "腾讯": "www.qq.com"
+    }
+  },
+  {
+    "group": "云 平 台",
+    "highlight": [ "AWS", "禅道"],
+    "twinkle": [ "百度云" ],
+    "link": {
+      "阿里云": "https://www.aliyun.com/",
+      "百度云": "https://cloud.baidu.com/",
+      "腾讯云": "https://cloud.tencent.com/",
+      "华为云": "https://www.huaweicloud.com/",
+      "AWS": "https://www.amazonaws.cn/",
+      "Azure": "https://azure.microsoft.com/zh-cn/",
+      "Google Cloud": "https://cloud.google.com/"
     }
   },
   {
     "group": "学 习 链 接 ",
     "highlight": [ "产品研发流程模板" ],
-    "twinkle": [ "ArchWiki" ],
+    "twinkle": [ "明道云" ],
     "link": {
       "ArchWiki": "https://wiki.archlinux.org/",
-      "DeepinWiki": "https://wikidev.uniontech.com/%E9%A6%96%E9%A1%B5",
       "Debian 参考手册": "https://www.debian.org/doc/manuals/debian-reference/index.zh-cn.html",
       "Debian 管理员手册": "https://www.debian.org/doc/manuals/debian-handbook/",
       "Linux From Scratch": "https://bf.mengyan1223.wang/lfs/zh_CN/10.0/LFS-BOOK.html",

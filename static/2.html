@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function addover(div) {
+            $(div).html("+");
+        }
+        function addout(div) {
+            $(div).html("&nbsp;");
+        }
+        function cutover(div) {
+            $(div).html("-");
+        }
+        function cutout(div) {
+            $(div).html("&nbsp;");
+        }
+        //添加类别
+        function typeAdd(div) {
+            var tr = $(div).parents("tr"); //获取当前行的Tr
+            /*设置月份行数+1*/
+            //findFather(tr);
+            var monthtd = findFather(tr); //获取当前行的月份TD
+            var monthtdSpan = monthtd.attr("rowspan"); //获取当前行的月份的TD数
+            monthtd.attr("rowspan", parseInt(monthtdSpan) + 1); //月份的TD数+1
+            /*添加一行空行*/
+            var newtr = document.createElement("tr");
+            var newtrHtml = '<td rowspan="1">' +
+                        '<div class="typeadd" onmouseover="addover(this)" onclick="typeAdd(this)" onmouseout="addout(this)">&nbsp;</div>' +
+                        '<div class="typename">无</div>' +
+                        '<div class="typecut"  onmouseover="cutover(this)" onclick="typeCut(this)" onmouseout="cutout(this)">&nbsp;</div>' +
+                    '</td>' +
+                    '<td>' +
+                        '<div class="contentadd" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>' +
+                        '<div class="content">无</div>' +
+                        '<div class="contentcut" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>' +
+                    '</td>' +
+                    '<td>' +
+                        '<div class="contentadd_" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>' +
+                        '<div class="content_">无</div>' +
+                        '<div class="contentcut_" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>' +
+                    '</td>';
+            $(newtr).html(newtrHtml);
+            tr = findNextFather(tr);
+            $(newtr).insertBefore(tr);
+        }
+        //类别移除
+        function typeCut(div) {
+            if (!confirm("移除此单元会导致后续单元全部移除，是否移除？")) {
+                return false;
+            }
+            var tr = $(div).parents("tr"); //获取当前行的Tr
+            var firstTd = tr.find("td").eq(0);
+            //如果没有月份列，则移除
+            if (firstTd.html().indexOf("月份") == -1) {
+                var rows = parseInt(firstTd.attr("rowspan"));
+                for (var i = 1; i < rows; i++) {
+                    tr.next().remove();
+                }
+                var ftd = $(findFather(tr));
+                //alert(ftd.attr("rowspan"));
+                var frows = parseInt(ftd.attr("rowspan")) - rows;
+                //alert(frows);
+                ftd.attr("rowspan", frows);
+                tr.remove();
+            } else {
+                //如果有月份列，则提取月份列，添加到下一个
+                var secondTd = tr.find("td").eq(1);
+                var frows = parseInt(firstTd.attr("rowspan"));//月份行数
+                var rows = parseInt(secondTd.attr("rowspan")); //类行数
+                if (frows == rows) {
+                    alert("次类为当月唯一类别，无法删除");
+                } else {
+                    var newfirtstTd = firstTd;
+                    var nextTr = findtypeFatherNext(tr);
+                    //alert(nextTr.html());
+                    var nextTr_firstTd = $(nextTr).find("td").eq(0);
+                    //alert(nextTr_firstTd.html());
+                    $(newfirtstTd).insertBefore(nextTr_firstTd);
+                    newfirtstTd.attr("rowspan", frows - rows);
+                    for (var i = 1; i < rows; i++) {
+                        tr.next().remove()
+                    }
+                    tr.remove();
+                }
+            }
+        }
+        //添加计划
+        function contentAdd(div) {
+            var tr = $(div).parents("tr"); //获取当前行的Tr
+            /*设置月份行数+1*/
+            var monthtd = findFather(tr); //获取当前行的月份TD
+            var monthtdSpan = monthtd.attr("rowspan"); //获取当前行的月份的TD数
+            monthtd.attr("rowspan", parseInt(monthtdSpan) + 1); //月份的TD数+1
+            /*设置类型行数+1*/
+            var typetd = findtypeFather(tr);
+            var typetdSpan = typetd.attr("rowspan"); //获取当前行的类型的TD数
+            typetd.attr("rowspan", parseInt(typetdSpan) + 1); //类型的TD数+1
+            /*添加一行空行*/
+            var newtr = document.createElement("tr");
+            var newtrHtml = '<td>' +
+                        '<div class="contentadd" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>' +
+                        '<div class="content">无</div>' +
+                        '<div class="contentcut" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>' +
+                    '</td>' +
+                    '<td>' +
+                        '<div class="contentadd_" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>' +
+                        '<div class="content_">无</div>' +
+                        '<div class="contentcut_" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>' +
+                    '</td>';
+            $(newtr).html(newtrHtml);
+            $(newtr).insertAfter(tr);
+        }
+        //移除计划
+        function contentCut(div) {
+            var tr = $(div).parents("tr"); //获取当前行的Tr
+            if (tr.find("td").eq(0).html().indexOf("typename") != -1) {
+                alert("此单元无法移除，请移除上级单元");
+            } else if (tr.find("td").eq(0).html().indexOf("无")==-1) {
+                alert("此单元无法移除，请移除上级单元");
+            } else if (tr.find("td").eq(0).html().indexOf("月份") != -1) {
+                alert("此单元无法移除，请移除上级单元");
+            } else {
+                /*设置月份行数+1*/
+                var monthtd = findFather(tr); //获取当前行的月份TD
+                var monthtdSpan = monthtd.attr("rowspan"); //获取当前行的月份的TD数
+                monthtd.attr("rowspan", parseInt(monthtdSpan) - 1); //月份的TD数+1
+                /*设置类型行数+1*/
+                var typetd = findtypeFather(tr);
+                var typetdSpan = typetd.attr("rowspan"); //获取当前行的类型的TD数
+                typetd.attr("rowspan", parseInt(typetdSpan) - 1); //类型的TD数+1
+                tr.remove();
+            }
+        }
+
+        //递归获取下一个目标TR
+        function findNextFather(tr) {
+            var tr = $(tr).next();
+            if (tr.html().indexOf("typename") != -1) {
+                return tr;
+            } else if (tr.html().indexOf("月份") != -1) {
+                return tr;
+            } else {
+                return findNextFather(tr);
+            }
+        }
+        //递归获取上一个月份列
+        function findFather(tr) {
+            //获取当前TR下的第一个TD
+            var monthtd = tr.find("td").eq(0);
+            //如果不包含"月份"关键字
+            if (monthtd.html().indexOf("月份") == -1) {
+                tr = $(tr).prev(); //向上推一个TR
+                return findFather(tr);//传入
+            } else {
+                return monthtd;
+            }
+        }
+        //递归获取上一个类型列
+        function findtypeFather(tr) {
+            //获取当前TR下的第一个TD
+            var typetd = tr.find("td").eq(0);
+            if (typetd.html().indexOf("月份") != -1) {
+                return tr.find("td").eq(1);
+            } else if (typetd.html().indexOf("typename") == -1) {
+                tr = $(tr).prev(); //向上推一个TR
+                return findtypeFather(tr); //传入
+            } else {
+                return typetd;
+            }
+        }
+        //递归获取下一个类型列
+        function findtypeFatherNext(tr) {
+            //获取当前TR下的第一个TD
+            tr = tr.next();
+            var typetd = tr.find("td").eq(0);
+            if (typetd.html().indexOf("typename") != -1) {
+                return tr;
+            } else {
+                return findtypeFatherNext(tr);
+            }
+        }
+    </script>
+    <style>
+        .typeadd
+        {
+            float:left;width:6%;
+            }
+        .typeadd:hover
+        {
+            background-color:#ccc;
+            cursor:pointer;
+            }
+        .typecut
+        {
+            float:left;width:6%;
+            }
+        .typecut:hover
+        {
+            background-color:#ccc;
+            cursor:pointer;
+            }
+        .contentadd
+        {
+            float:left;width:6%;
+            }
+        .contentadd:hover
+        {
+            background-color:#ccc;
+            cursor:pointer;
+            }
+        .contentcut
+        {
+            float:left;width:6%;
+            }
+        .contentcut:hover
+        {
+            background-color:#ccc;
+            cursor:pointer;
+            }
+        .contentadd_
+        {
+            float:left;width:6%;
+            }
+        .contentadd_:hover
+        {
+            background-color:#ccc;
+            cursor:pointer;
+            }
+        .contentcut_
+        {
+            float:left;width:6%;
+            }
+        .contentcut_:hover
+        {
+            background-color:#ccc;
+            cursor:pointer;
+            }
+        .typename
+        {
+            float:left;width: 88%;
+            }
+        .content
+        {
+            float:left;width: 88%;
+            }
+        .content_
+        {
+            float:left;width: 88%;
+            }
+    </style>
+</head>
+<body>
+<table class="FormTable">
+        <thead>
+            <tr>
+                <td style="width:10%">月份</td>
+                <td style="width:10%">类别</td>
+                <td style="width:40%">护理部</td>
+                <td style="width:40%">大科</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                    <td rowspan="1">一月份</td>
+                    <td rowspan="1">
+                        <div class="typeadd" onmouseover="addover(this)" onclick="typeAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="typename">无</div>
+                        <div class="typecut"  onmouseover="cutover(this)" onclick="typeCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+                    <td>
+                        <div class="contentadd" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="content">无</div>
+                        <div class="contentcut" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+                    <td>
+                        <div class="contentadd_" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="content_">无</div>
+                        <div class="contentcut_" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+            </tr>
+            <tr>
+                    <td rowspan="1">二月份</td>
+                    <td rowspan="1">
+                        <div class="typeadd" onmouseover="addover(this)" onclick="typeAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="typename">无</div>
+                        <div class="typecut"  onmouseover="cutover(this)" onclick="typeCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+                    <td>
+                        <div class="contentadd" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="content">无</div>
+                        <div class="contentcut" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+                    <td>
+                        <div class="contentadd_" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="content_">无</div>
+                        <div class="contentcut_" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+            </tr>
+            <tr>
+                    <td rowspan="1">三月份</td>
+                    <td rowspan="1">
+                        <div class="typeadd" onmouseover="addover(this)" onclick="typeAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="typename">无</div>
+                        <div class="typecut"  onmouseover="cutover(this)" onclick="typeCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+                    <td>
+                        <div class="contentadd" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="content">无</div>
+                        <div class="contentcut" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+                    <td>
+                        <div class="contentadd_" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="content_">无</div>
+                        <div class="contentcut_" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+            </tr>
+            <tr>
+                    <td rowspan="1">四月份</td>
+                    <td rowspan="1">
+                        <div class="typeadd" onmouseover="addover(this)" onclick="typeAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="typename">无</div>
+                        <div class="typecut"  onmouseover="cutover(this)" onclick="typeCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+                    <td>
+                        <div class="contentadd" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="content">无</div>
+                        <div class="contentcut" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+                    <td>
+                        <div class="contentadd_" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="content_">无</div>
+                        <div class="contentcut_" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+            </tr>
+            <tr>
+                    <td rowspan="1">五月份</td>
+                    <td rowspan="1">
+                        <div class="typeadd" onmouseover="addover(this)" onclick="typeAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="typename">无</div>
+                        <div class="typecut"  onmouseover="cutover(this)" onclick="typeCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+                    <td>
+                        <div class="contentadd" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="content">无</div>
+                        <div class="contentcut" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+                    <td>
+                        <div class="contentadd_" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="content_">无</div>
+                        <div class="contentcut_" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+            </tr>
+            <tr>
+                    <td rowspan="1">六月份</td>
+                    <td rowspan="1">
+                        <div class="typeadd" onmouseover="addover(this)" onclick="typeAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="typename">无</div>
+                        <div class="typecut"  onmouseover="cutover(this)" onclick="typeCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+                    <td>
+                        <div class="contentadd" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="content">无</div>
+                        <div class="contentcut" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+                    <td>
+                        <div class="contentadd_" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="content_">无</div>
+                        <div class="contentcut_" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+            </tr>
+            <tr>
+                    <td rowspan="1">七月份</td>
+                    <td rowspan="1">
+                        <div class="typeadd" onmouseover="addover(this)" onclick="typeAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="typename">无</div>
+                        <div class="typecut"  onmouseover="cutover(this)" onclick="typeCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+                    <td>
+                        <div class="contentadd" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="content">无</div>
+                        <div class="contentcut" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+                    <td>
+                        <div class="contentadd_" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="content_">无</div>
+                        <div class="contentcut_" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+            </tr>
+            <tr>
+                    <td rowspan="1">八月份</td>
+                    <td rowspan="1">
+                        <div class="typeadd" onmouseover="addover(this)" onclick="typeAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="typename">无</div>
+                        <div class="typecut"  onmouseover="cutover(this)" onclick="typeCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+                    <td>
+                        <div class="contentadd" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="content">无</div>
+                        <div class="contentcut" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+                    <td>
+                        <div class="contentadd_" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="content_">无</div>
+                        <div class="contentcut_" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+            </tr>
+            <tr>
+                    <td rowspan="1">九月份</td>
+                    <td rowspan="1">
+                        <div class="typeadd" onmouseover="addover(this)" onclick="typeAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="typename">无</div>
+                        <div class="typecut"  onmouseover="cutover(this)" onclick="typeCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+                    <td>
+                        <div class="contentadd" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="content">无</div>
+                        <div class="contentcut" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+                    <td>
+                        <div class="contentadd_" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="content_">无</div>
+                        <div class="contentcut_" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+            </tr>
+            <tr>
+                    <td rowspan="1">十月份</td>
+                    <td rowspan="1">
+                        <div class="typeadd" onmouseover="addover(this)" onclick="typeAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="typename">无</div>
+                        <div class="typecut"  onmouseover="cutover(this)" onclick="typeCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+                    <td>
+                        <div class="contentadd" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="content">无</div>
+                        <div class="contentcut" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+                    <td>
+                        <div class="contentadd_" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="content_">无</div>
+                        <div class="contentcut_" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+            </tr>
+            <tr>
+                    <td rowspan="1">十一月份</td>
+                    <td rowspan="1">
+                        <div class="typeadd" onmouseover="addover(this)" onclick="typeAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="typename">无</div>
+                        <div class="typecut"  onmouseover="cutover(this)" onclick="typeCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+                    <td>
+                        <div class="contentadd" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="content">无</div>
+                        <div class="contentcut" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+                    <td>
+                        <div class="contentadd_" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="content_">无</div>
+                        <div class="contentcut_" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+            </tr>
+            <tr>
+                    <td rowspan="1">十二月份</td>
+                    <td rowspan="1">
+                        <div class="typeadd" onmouseover="addover(this)" onclick="typeAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="typename">无</div>
+                        <div class="typecut"  onmouseover="cutover(this)" onclick="typeCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+                    <td>
+                        <div class="contentadd" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="content">无</div>
+                        <div class="contentcut" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+                    <td>
+                        <div class="contentadd_" onmouseover="addover(this)" onclick="contentAdd(this)" onmouseout="addout(this)">&nbsp;</div>
+                        <div class="content_">无</div>
+                        <div class="contentcut_" onmouseover="cutover(this)" onclick="contentCut(this)" onmouseout="cutout(this)">&nbsp;</div>
+                    </td>
+            </tr>
+        </tbody>
+    </table>
+
+</body>
+</html>

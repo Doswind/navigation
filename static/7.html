@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<style>
+.btf{
+    height:28px;
+    background-color:#F8F0E1;
+}
+</style>
+<script type="text/javascript">
+var objTable;
+function PageLoad(){
+    objTable = document.getElementById( "dataGrid" );//找到操作Table
+}
+function copyRow(){
+    var objTempRow = objTable.rows[2];//找到Table的模版行
+    var objNewRow = objTable.insertRow( objTable.rows.length );//在Table的末尾新增一行
+    objNewRow.className = "btf";//给表格的添加行样式
+    objNewRow.id = objTable.rows.length - 1;
+    //以模版行建立新行内容
+    for ( var i=0 ; i<objTempRow.cells.length ; i++ ){
+        var objNewCell = objNewRow.insertCell( i );
+        objNewCell.innerHTML = objTempRow.cells[i].innerHTML;
+    }
+}
+function deletelastRow(){
+    if ( objTable.rows.length -1 > 0 ){
+        objTable.deleteRow(objTable.rows.length-1); //删除指定行
+    }
+}
+
+function deletecheckedRow(){
+    if(document.all('idarray').value!='undefined'){
+        for(var i=document.all('idarray').length-1;i>-1;i--){
+            if(document.all('idarray')[i].checked==true){
+                var r=Number(document.getElementById('tb'+document.all('idarray')[i].value).rowIndex);
+                objTable.deleteRow(r);
+            }
+        }
+    }
+}
+function deleteRow(r){
+    var i=r.parentNode.parentNode.rowIndex;
+    objTable.deleteRow(i);
+}
+function addRow1(){
+    var crTR = objTable.insertRow(); //增加一行
+    var crTDa = crTR.insertCell();//第一个TD
+    var crTDb = crTR.insertCell();//第二个TD,带rowspan=2
+    crTDb.rowSpan=2;//设成rowspan=2;
+    crTDb.colSpan=3;//设成colSpan=3;
+    var croTR = objTable.insertRow();//再插入一个TR
+    var croTD = croTR.insertCell();//TD,对应上边的rowspan=3的TD
+    //给单元格添加内容
+    crTDa.innerHTML="<b>111111</b>这里innerHTML";
+    crTDb.innerHTML="222222跨行跨列：rowspan=2,colSpan=3";
+    croTD.innerText="<b>333333</b>这里innerText";
+    croTD.width="20px;";//设置单列的宽度
+    croTD.height="80px;";//设置单列的高度
+    crTR.setAttribute('align','center');//这里通过setAttribute增加表单属性，
+}
+function addRow2(){
+    var crTR = objTable.insertRow();
+    var crTDa = crTR.insertCell();
+    var crTDb = crTR.insertCell();
+    crTDa.rowSpan=2;
+    crTDb.colSpan=3;
+    croTR = objTable.insertRow();
+    var crTDc = croTR.insertCell();
+    crTDc.colSpan=3;
+    crTDa.innerHTML="111111 rowspan=2";
+    crTDb.innerHTML="222222 colSpan=3";
+    crTDc.innerHTML="333333 colSpan=3";
+}
+function mergecells(){
+    if(objTable.rows[3].cells[3]==null)return false;//如果已经删除了，那就不允许再操作了
+    objTable.rows[3].cells[2].innerHTML=objTable.rows[3].cells[2].innerHTML+objTable.rows[3].cells[3].innerHTML;
+    objTable.rows[3].cells[2].colSpan=2;
+    objTable.rows[3].deleteCell(3);//删除指定列
+    //如果想要拆分单元格，那么1、可以先删除行，再添加新的行。
+    //2、可以在当前单元格中增加一个table，其行数和列数就是拆分的行数和列数。
+}
+function isshowtitlerow(){
+    if(document.getElementById("title").style.display=='')document.getElementById("title").style.display ="none";
+    else document.getElementById("title").style.display ="";
+}
+function addtable(){
+    var otable=document.createElement("table");//创建一表格
+    //设置table的属性
+    otable.setAttribute("CELLPADDING","0");
+    otable.setAttribute("CELLSPACING","0");
+    otable.setAttribute("border","1");
+    var otr=otable.insertRow();//创建一空行
+    var otd1 = otr.insertCell();//创建一空列
+    var otd2 = otr.insertCell();//创建一空列
+    otable.width='880';
+    otr.className = "btf"; //行添加样式
+    otd1.innerHTML = '单元格1'; //空列初始化值
+    otd2.innerHTML = '单元格2居中'; //空列初始化值
+    //设置列属性
+    otd2.style.background="#7596C6";
+    otd2.align="center";//等同.setAttribute('align','center');
+    document.getElementById('addtable').innerHTML="";
+    document.getElementById('addtable').appendChild(otable);//把表格追加到页面的div中
+}
+window.onload = PageLoad;//初始化获得所要操作的表格句柄
+</script>
+</head>
+<body>
+    <table id="dataGrid" border="1" width="880" align="center">
+        <tr id="title">
+            <th> </th>
+            <th>权限组名</th>
+            <th>权限组描述</th>
+            <th>删除</th>
+        </tr>
+        <tr id="tb965">
+            <td><input type="checkbox" name="idarray" value="965" /></td>
+            <td>船舶签证</td>
+            <td>船舶签证啊啊</td>
+            <td><input type="button" value="删除当前行" onclick="deleteRow(this)"></td>
+        </tr>
+        <tr id="tb961">
+            <td><input type="checkbox" name="idarray" value="961" /></td>
+            <td>拷贝项</td>
+            <td>被拷贝</td>
+            <td><input type="button" value="删除当前行" onclick="deleteRow(this)"></td>
+        </tr>
+        <tr id="tb960">
+            <td><input type="checkbox" name="idarray" value="960" /></td>
+            <td>违章录入</td>
+            <td>违章录入哦</td>
+            <td><input type="button" value="删除当前行" onclick="deleteRow(this)"></td>
+        </tr>
+    </table>
+    <div id="addtable">在这里按“增加一个表格”会插入一个表格</div>
+    <input type="button" value="删除选中的行" onclick="deletecheckedRow();" />
+    <input id="btnInsert" name="btnInsert" type="button" onclick="copyRow()"
+        value="拷贝第二行(带样式)" />
+    <input id="btnDelete" name="btnDelete" type="button"
+        onclick="deletelastRow()" value="删除末行" />
+    <input type="button" value="增加一行（用setAttribute增加属性）"
+        onclick="addRow1();" />
+    <input type="button" value="增加一行(另)" onclick="addRow2();" />
+    <input type="button" value="隐藏/显示标题栏" onclick="isshowtitlerow();" />
+    <input type="button" value="取table的属性"
+        onclick="alert(objTable.getAttribute('id')+':'+objTable.getAttribute('border'));" />
+    <input type="button" value="合并第3行的后两列" onclick="mergecells();" />
+    <input type="button" value="增加一个表格" onclick="addtable();" />
+    <input type="button" value="共有多少行?"
+        onclick="alert(objTable.rows.length);" />
+</body>
+</html>

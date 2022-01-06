@@ -68,6 +68,12 @@ class Navi:
         html = html + '\t\t</tbody>'
         return html
 
+    def mgr_html(self):
+        pass
+
+    def demo_html(self, demo, html_file):
+        pass
+
     def generate(self, demo, html_file):
         html = ""
         with open(demo, encoding='utf-8') as f:

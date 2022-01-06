@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+    <script language="javascript" type="text/javascript">
+    function $(id) {
+        return document.getElementById(id);
+    }
+    function addHero(btn) {
+        var current_tr = btn.parentNode.parentNode;
+        var tbody = current_tr.parentNode;
+        //var tableRow=$("mytable").insertRow(current_tr.rowIndex);
+        var tableRow=tbody.insertRow(current_tr.rowIndex);
+        var Cell_0=tableRow.insertCell(0);
+        Cell_0.innerHTML='<input value="'+$("lname").value+'"  readonly="true"/>';
+        Cell_0.className="s1";
+        var Cell_1=tableRow.insertCell(1);
+        Cell_1.innerHTML='<input value="'+$("laddress").value+'"  readonly="true"/>';
+        Cell_1.className="s2";
+        var Cell_2=tableRow.insertCell(2);
+        Cell_2.innerHTML='<input type="checkbox" value="highlight">高亮<input type="checkbox" value="blink">闪烁';
+        Cell_2.className="s3";
+        var Cell_3=tableRow.insertCell(3);
+        Cell_3.innerHTML="<a href='#' onclick='Del(this.parentNode,this.parentNode.parentNode.rowIndex)'>删除</a>        <a href='#' onclick='edit(this.parentNode.parentNode)' class='edit'>修改</a>";
+        Cell_3.className="s4";
+
+        current_tr.cells[0].innerHTML = '<input id="lname" type="text"/></td>'
+        current_tr.cells[1].innerHTML = '<input id="laddress" type="text"/></td>'
+    }
+
+    function Del(obj,val) {
+        //var a=window.confirm("您确定要删除吗？");
+        //if(a)  {
+            $("mytable").deleteRow(val);
+        //}  else  {
+            //window.alert("未删除！");
+        //}
+    }
+
+    function edit(obj) {
+        var inp = obj.getElementsByTagName("input");
+        for (var i=0,len=inp.length;i<len;i++)
+        {
+            inp[i].readOnly=false;
+        }
+    }
+    </script>
+    </head>
+    <body>
+    <h1>na</h1>
+    <table id="mytable" cellspacing="0px" border="3" bordercolor="red">
+        <tbody>
+        <tr>
+            <td class="s_top">Name</td>
+            <td class="s_top">Link</td>
+            <td class="s_top">Notice</td>
+            <td class="s_top" colspan="2">Operation</td>
+        </tr>
+        <tr>
+            <td class="s1"><input value="Baidu" readonly="true"/></td>
+            <td class="s2"><input value="www.baidu.com" readonly="true"/></td>
+            <td class="s2"><input type="checkbox" value="highlight">高亮<input type="checkbox" value="blink">闪烁</td>
+            <td class="s4"><a href="#" onclick='Del(this.parentNode,this.parentNode.parentNode.rowIndex)'>删除</a>
+            <a href="#" onclick='edit(this.parentNode.parentNode)'>修改</a></td>
+        </tr>
+        <tr>
+            <td class="s1"><input id="lname" type="text"/></td>
+            <td class="s2"><input id="laddress" type="text"/></td>
+            <td class="s2"><input type="checkbox" value="highlight">高亮<input type="checkbox" value="blink">闪烁</td>
+            <td class="s4"><input class="but" type="button" value="添加" onclick="addHero(this)"/></td>
+        </tr>
+
+        </tbody>
+
+    </table>
+
+    </body>
+</html>
+
+</body>
+</html>

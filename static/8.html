@@ -1,0 +1,145 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+
+<title>报表</title>
+<style type="text/css">
+<!--
+.datalist{
+    border:1px solid #429fff;    /* 表格边框 */
+    font-family:Arial;
+    border-collapse:collapse;    /* 边框重叠 */
+}
+.datalist tr:hover{
+    background-color:#c4e4ff;   /* 动态变色,IE6下无效！*/
+}
+.datalist caption{
+    padding-top:3px;
+    padding-bottom:2px;
+    font:bold 1.1em;
+    background-color:#f0f7ff;
+    border:1px solid #429fff;    /* 表格标题边框 */
+}
+.datalist th{
+    border:1px solid #429fff;    /* 行、列名称边框 */
+    background-color:#d2e8ff;
+    font-weight:bold;
+    padding-top:4px; padding-bottom:4px;
+    padding-left:10px; padding-right:10px;
+    text-align:center;
+}
+.datalist td{
+    border:1px solid #429fff;    /* 单元格边框 */
+    text-align:right;
+    padding:4px;
+}
+-->
+</style>
+
+<script language="javascript">
+window.onload=function(){
+    //插入一行
+    var oTr = document.getElementById("mytable").insertRow(2);
+    var aText = new Array();
+    aText[0] = document.createTextNode("cell1的内容");
+    aText[1] = document.createTextNode("cell2的内容");
+    aText[2] = document.createTextNode("cell3的内容");
+    aText[3] = document.createTextNode("cell4的内容");
+    aText[4] = document.createTextNode("cell5的内容");
+    for(var i=0;i<aText.length;i++){
+        var oTd = oTr.insertCell(i);
+        oTd.appendChild(aText[i]);
+    }
+}
+
+window.onload=function(){
+    var oTable = document.getElementById("mytable");
+    //修改单元格内容
+    oTable.rows[3].cells[4].innerHTML = "更改的内容";
+}
+
+window.onload=function(){
+    var oTable = document.getElementById("mytable");
+    //删除一行，后面的行号自动补齐
+    oTable.deleteRow(2);
+    //删除一个单元格，后面的也自动补齐
+    oTable.rows[2].deleteCell(1);
+}
+function myDelete(){
+    var oTable = document.getElementById("mytable");
+    //删除该行
+    this.parentNode.parentNode.parentNode.removeChild(this.parentNode.parentNode);
+}
+
+window.onload=function(){
+    var oTable = document.getElementById("mytable");
+    var oTd;
+    //动态添加delete链接
+    for(var i=1;i<oTable.rows.length;i++){
+        oTd = oTable.rows[i].insertCell(5);
+        oTd.innerHTML = "<a href='#'>delete</a>";
+        oTd.firstChild.onclick = myDelete; //添加删除事件
+    }
+}
+function deleteColumn(oTable,iNum){
+    //自定义删除列函数，即每行删除相应单元格
+    for(var i=0;i<oTable.rows.length;i++)
+        oTable.rows[i].deleteCell(iNum);
+}
+
+window.onload=function(){
+    var oTable = document.getElementById("mytable");
+    deleteColumn(oTable,2); //参数2:表示要删除的列号
+}
+    </script>
+</head>
+<body>
+<table class="datalist" summary="财政报表">
+    <caption>报表 2005 - 2008</caption>
+    <thead>
+    <tr>
+        <th> </th>
+        <th scope="col">2005</th>
+        <th scope="col">2006</th>
+        <th scope="col">2007</th>
+        <th scope="col">2008</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th scope="row">拨款</th>
+        <td>11,980</td>
+        <td>12,650</td>
+        <td>9,700</td>
+        <td>10,600</td>
+    </tr>
+    <tr>
+        <th scope="row">捐款</th>
+        <td>4,780</td>
+        <td>4,989</td>
+        <td>6,700</td>
+        <td>6,590</td>
+    </tr>
+    <tr>
+        <th scope="row">投资</th>
+        <td>8,000</td>
+        <td>8,100</td>
+        <td>8,760</td>
+        <td>8,490</td>
+    </tr>
+    <tr>
+        <th scope="row">募捐</th>
+        <td>3,200</td>
+        <td>3,120</td>
+        <td>3,700</td>
+        <td>4,210</td>
+    </tr>
+    </tbody>
+    <tfoot>
+    <tr>
+       <td colspan="5">2008 年统计</td>
+    </tr>
+    </tfoot>
+</table>
+</body>
+</html>
