@@ -106,7 +106,23 @@
 			</tr>
 		</thead>
 
-<CODE_BLOCK_TBODY/>
+        <tbody>
+        % for group, link in linkgroup.items():
+            <tr class ="success" >
+                <td class ='tr-field' >&#9827;&#9827;  {{ group }} </td>
+                <td> </td> <td> </td> <td> </td>
+                % for item in link:
+                    % if item[2] == 'yes':
+                <td><a class='tr-notice' href="{{ link[1] }}" target="_blank">{{ link[0] }}</a></td>
+                    % elif item[3] == 'yes':
+                <td><a class='tr-notice' href="{{ link[1] }}" target="_blank"><div class="blink">{{ link[0] }}</div></a></td>
+                    % else:
+                <td><a href="{{ link[1] }}" target="_blank">{{ link[0] }}</a></td>
+                    % end
+                % end
+            </tr>
+        % end
+        </tbody>
 
 	</table>
 </div>

@@ -2,7 +2,7 @@
   {
     "group": "开 发 站 点",
     "highlight": [ "GitHub", "gitee"],
-    "twinkle": [ "debian" ],
+    "twinkle": [ "Debian" ],
     "link": {
       "GitHub": "https://github.com/",
       "gitee": "https://gitee.com/",

@@ -56,8 +56,7 @@ def login():
 @app.route('/')
 def index():
     html_file = 'hao456.html'
-    navi.generate('demo.html', html_file)
-    return template(html_file)
+    return template(html_file, linkgroup = navi.load())
 
 if __name__ == '__main__':
     app.run(reloader=True, host='0.0.0.0', port=9000, debug=True)
