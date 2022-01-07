@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="utf-8">
-    <title>Hao456导航</title>
+    <title>Hello导航</title>
     <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/3.3.7/css/bootstrap.min.css">
@@ -68,7 +68,7 @@
         function changeColor(){
             var color="#ff0000|#00ff00|#0000ff|#888800|#880088|#008888|yellow|green|blue|gray";
             color=color.split("|");
-            $('.blink').css('color', color[parseInt(Math.random() * color.length)]);
+            $('.tr-blink').css('color', color[parseInt(Math.random() * color.length)]);
         }
 
         $(function () {
@@ -106,23 +106,46 @@
 			</tr>
 		</thead>
 
-        <tbody>
         % for group, link in linkgroup.items():
+        <tbody>
             <tr class ="success" >
                 <td class ='tr-field' >&#9827;&#9827;  {{ group }} </td>
                 <td> </td> <td> </td> <td> </td>
-                % for item in link:
-                    % if item[2] == 'yes':
-                <td><a class='tr-notice' href="{{ link[1] }}" target="_blank">{{ link[0] }}</a></td>
-                    % elif item[3] == 'yes':
-                <td><a class='tr-notice' href="{{ link[1] }}" target="_blank"><div class="blink">{{ link[0] }}</div></a></td>
+            </tr>
+
+                % for idx, item in enumerate(link):
+                    <%
+                    if item[2] == 'checked':
+                        class_str = "tr-notice"
+                    elif item[3] == 'checked':
+                        class_str = "tr-notice tr-blink"
+                    else:
+                        class_str = ""
+                    end
+                    %>
+                    % if idx % 4 == 0:
+            <tr>
+                <td><a class="{{ class_str }}" href="{{ item[1] }}" target="_blank">{{ item[0] }}</a></td>
+                    % elif idx % 4 == 3:
+                <td><a class="{{ class_str }}" href="{{ item[1] }}" target="_blank">{{ item[0] }}</a></td>
+            </tr>
                     % else:
-                <td><a href="{{ link[1] }}" target="_blank">{{ link[0] }}</a></td>
+                <td><a class="{{ class_str }}" href="{{ item[1] }}" target="_blank">{{ item[0] }}</a></td>
                     % end
+
+                    % if idx + 1 == len(link) and idx % 4 < 3:
+                    %    for i in range(3 - idx % 4):
+                <td></td>
+                    %    end
+            </tr>
+                    % end
+
+
                 % end
             </tr>
-        % end
         </tbody>
+        % end
+
 
 	</table>
 </div>

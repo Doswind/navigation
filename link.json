@@ -2,30 +2,30 @@
   {
     "group": "开 发 站 点",
     "highlight": [ "GitHub", "gitee"],
-    "twinkle": [ "Debian" ],
+    "blink": [ "Debian" ],
     "link": {
       "GitHub": "https://github.com/",
       "gitee": "https://gitee.com/",
-      "gitlab": "www.gitlab.com",
+      "gitlab": "https://www.gitlab.com",
       "Debian": "https://www.debian.org/"
     }
   },
   {
     "group": "咨 讯 站 点",
     "highlight": [ "", ""],
-    "twinkle": [ "百度" ],
+    "blink": [ "百度" ],
     "link": {
-      "网易": "www.163.com",
-      "新浪": "www.sina.com",
-      "百度": "www.baidu.com",
-      "搜狐": "www.sohu.com",
-      "腾讯": "www.qq.com"
+      "网易": "https://www.163.com",
+      "新浪": "https://www.sina.com.cn",
+      "百度": "https://www.baidu.com/",
+      "搜狐": "https://www.sohu.com",
+      "腾讯": "https://www.qq.com"
     }
   },
   {
     "group": "云 平 台",
     "highlight": [ "AWS", "禅道"],
-    "twinkle": [ "百度云" ],
+    "blink": [ "百度云" ],
     "link": {
       "阿里云": "https://www.aliyun.com/",
       "百度云": "https://cloud.baidu.com/",
@@ -39,7 +39,7 @@
   {
     "group": "学 习 链 接 ",
     "highlight": [ "产品研发流程模板" ],
-    "twinkle": [ "明道云" ],
+    "blink": [ "明道云" ],
     "link": {
       "ArchWiki": "https://wiki.archlinux.org/",
       "Debian 参考手册": "https://www.debian.org/doc/manuals/debian-reference/index.zh-cn.html",

@@ -26,12 +26,12 @@ class Navi:
         for grp in jsonstr:
             link = []
             for name, value in grp['link'].items():
-                highlight = 'no'
-                twinkle = 'no'
+                highlight = ''
+                twinkle = ''
                 if name in grp['highlight']:
-                    highlight = 'yes'
-                if name in grp['twinkle']:
-                    twinkle = 'yes'
+                    highlight = 'checked'
+                if name in grp['blink']:
+                    twinkle = 'checked'
                 link.append([name, value, highlight, twinkle])
             linkgroup[grp['group']] = link
         return linkgroup

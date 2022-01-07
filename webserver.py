@@ -22,7 +22,7 @@ def download(filename):
 def mgr():
     if request.method == 'GET':
         print('enter mgr:get')
-        return template("mgr.html")
+        return template("mgr.html",  linkgroup = navi.load())
     else:
         print('enter mgr:post')
         table = request.forms
@@ -34,7 +34,7 @@ def mgr():
         print(notice)
         print(table)
         print(request)
-        return template('mgr.html')
+        return template('mgr.html',  linkgroup = navi.load())
 
 @app.route("/login", method=["POST","GET"])
 def login():
@@ -55,8 +55,7 @@ def login():
 
 @app.route('/')
 def index():
-    html_file = 'hao456.html'
-    return template(html_file, linkgroup = navi.load())
+    return template('demo.html', linkgroup = navi.load())
 
 if __name__ == '__main__':
     app.run(reloader=True, host='0.0.0.0', port=9000, debug=True)
