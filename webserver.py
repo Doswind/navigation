@@ -55,7 +55,11 @@ def login():
 
 @app.route('/')
 def index():
-    return template('demo.html', linkgroup = navi.load())
+    navfile = "hao456.html"
+    navhtml = template('demo.html', linkgroup = navi.load())
+    with open(navfile, 'w', encoding='utf-8') as out_f:
+        out_f.write(navhtml)
+    return navhtml
 
 if __name__ == '__main__':
     app.run(reloader=True, host='0.0.0.0', port=9000, debug=True)
